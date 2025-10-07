@@ -1,0 +1,91 @@
+========================================
+  WEATHERLY - QUICK API KEY SETUP
+========================================
+
+The demo API key has expired. You need to get your own FREE API key.
+It only takes 2-3 minutes!
+
+STEP 1: GET YOUR FREE API KEY
+==============================
+
+1. Open this link in your browser:
+   https://home.openweathermap.org/users/sign_up
+
+2. Fill in the form:
+   - Username: (choose any username)
+   - Email: (your email address)
+   - Password: (create a password)
+   - Check "I am 16 years old and over"
+   - Check "I agree with Privacy Policy..."
+   - Complete the CAPTCHA
+
+3. Click "Create Account"
+
+4. Check your email and click the verification link
+
+5. Log in to OpenWeatherMap
+
+6. Go to: https://home.openweathermap.org/api_keys
+
+7. You'll see your API key (looks like: a1b2c3d4e5f6g7h8i9j0)
+   COPY THIS KEY!
+
+
+STEP 2: ADD YOUR API KEY TO THE APP
+====================================
+
+1. Open this file in Notepad or any text editor:
+   c:\Users\AKASH K\OneDrive\Documents\Projects\Weatherly\script.js
+
+2. Find line 6 (near the top):
+   const API_KEY = 'b6907d289e10d714a6e88b30761fae22';
+
+3. Replace it with YOUR key:
+   const API_KEY = 'YOUR_ACTUAL_KEY_HERE';
+
+4. Save the file (Ctrl + S)
+
+5. Go back to your browser and refresh (F5 or Ctrl + R)
+
+6. Try searching for a city again!
+
+
+IMPORTANT NOTES:
+================
+
+⏰ New API keys take 10-15 minutes to activate
+   If you get "Invalid API key" right after signup, wait 10 minutes!
+
+✅ The API is 100% FREE for personal use
+   - 60 calls per minute
+   - 1,000,000 calls per month
+
+🔒 Keep your API key private
+   Don't share it publicly
+
+
+TROUBLESHOOTING:
+================
+
+Problem: "Invalid API key" error
+Solution: Wait 10-15 minutes after creating your account
+
+Problem: Can't find API key
+Solution: Log in and go to https://home.openweathermap.org/api_keys
+
+Problem: Email not verified
+Solution: Check spam folder for verification email
+
+
+NEED HELP?
+==========
+
+If you're stuck, you can:
+1. Check the detailed guide: API_SETUP_GUIDE.md
+2. Visit: https://openweathermap.org/faq
+3. Contact OpenWeatherMap support
+
+
+========================================
+After setup, your app will work perfectly!
+========================================

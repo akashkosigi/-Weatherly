@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weatherly - Real-Time Weather App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <span class="weather-icon-title">⛅</span>
+                    Weatherly
+                </h1>
+                <div class="header-controls">
+                    <button id="unitToggle" class="unit-toggle" title="Toggle Temperature Unit">
+                        <span class="unit-celsius active">°C</span>
+                        <span class="unit-divider">/</span>
+                        <span class="unit-fahrenheit">°F</span>
+                    </button>
+                    <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+                        <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input 
+                            type="text" 
+                            id="cityInput" 
+                            class="city-input" 
+                            placeholder="Where would you like to check the weather?"
+                            autocomplete="off"
+                        >
+                        <button id="searchBtn" class="search-btn">Search</button>
+                    </div>
+                    <button id="locationBtn" class="location-btn" title="Use Current Location">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="12" x2="6.22" y2="12"></line>
+                            <line x1="17.78" y1="12" x2="19.78" y2="12"></line>
+                        </svg>
+                        <span>Current Location</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="loader"></div>
+                <p>Just a moment, checking the skies for you...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="error-state">
+                <svg class="error-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <h3 id="errorTitle">Hmm, we hit a snag</h3>
+                <p id="errorMessage">Couldn't grab the weather info right now. Mind giving it another shot?</p>
+                <button id="retryBtn" class="retry-btn">Give it Another Try</button>
+            </div>
+
+            <!-- Weather Display -->
+            <div id="weatherDisplay" class="weather-display">
+                <!-- Current Weather Card -->
+                <div class="current-weather-card">
+                    <div class="weather-header">
+                        <div class="location-info">
+                            <h2 id="cityName" class="city-name">Getting your location...</h2>
+                            <p id="currentDate" class="current-date"></p>
+                        </div>
+                        <div class="weather-icon-large" id="weatherIconLarge">
+                            🌤️
+                        </div>
+                    </div>
+
+                    <div class="temperature-section">
+                        <div class="temperature-main">
+                            <span id="temperature" class="temperature">--</span>
+                            <span id="tempUnit" class="temp-unit">°C</span>
+                        </div>
+                        <div class="feels-like">
+                            But it feels more like <span id="feelsLike">--</span><span id="feelsLikeUnit">°C</span>
+                        </div>
+                    </div>
+
+                    <div class="weather-description">
+                        <p id="weatherCondition" class="condition-text">--</p>
+                        <p id="weatherDescription" class="description-text">--</p>
+                    </div>
+
+                    <div class="weather-details-grid">
+                        <div class="detail-card">
+                            <div class="detail-icon">💧</div>
+                            <div class="detail-content">
+                                <p class="detail-label">Humidity</p>
+                                <p id="humidity" class="detail-value">--%</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">💨</div>
+                            <div class="detail-content">
+                                <p class="detail-label">Wind Speed</p>
+                                <p id="windSpeed" class="detail-value">-- km/h</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">🌡️</div>
+                            <div class="detail-content">
+                                <p class="detail-label">Pressure</p>
+                                <p id="pressure" class="detail-value">-- hPa</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">👁️</div>
+                            <div class="detail-content">
+                                <p class="detail-label">Visibility</p>
+                                <p id="visibility" class="detail-value">-- km</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">🌅</div>
+                            <div class="detail-content">
+                                <p class="detail-label">Sunrise</p>
+                                <p id="sunrise" class="detail-value">--:--</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-card">
+                            <div class="detail-icon">🌇</div>
+                            <div class="detail-content">
+                                <p class="detail-label">Sunset</p>
+                                <p id="sunset" class="detail-value">--:--</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="additional-info">
+                    <div class="info-card">
+                        <h3>Temperature Range</h3>
+                        <div class="temp-range">
+                            <div class="temp-range-item">
+                                <span class="range-label">Min</span>
+                                <span id="tempMin" class="range-value">--°</span>
+                            </div>
+                            <div class="temp-range-divider"></div>
+                            <div class="temp-range-item">
+                                <span class="range-label">Max</span>
+                                <span id="tempMax" class="range-value">--°</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Wind Details</h3>
+                        <div class="wind-info">
+                            <div class="wind-item">
+                                <span class="wind-label">Direction</span>
+                                <span id="windDirection" class="wind-value">--</span>
+                            </div>
+                            <div class="wind-item">
+                                <span class="wind-label">Gust</span>
+                                <span id="windGust" class="wind-value">-- km/h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Searches -->
+            <div id="recentSearches" class="recent-searches">
+                <h3>Recent Searches</h3>
+                <div id="recentCitiesList" class="recent-cities-list">
+                    <!-- Recent cities will be added here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Weather data courtesy of <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a></p>
+            <p class="footer-note">Don't forget to add your API key in script.js to get started</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
